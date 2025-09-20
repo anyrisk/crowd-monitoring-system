@@ -100,10 +100,12 @@ class AlertManager:
             
             # Cross-platform notifications
             try:
+                import plyer
                 from plyer import notification
                 self.plyer_notification = notification
                 self.notification_available = True
             except ImportError:
+                self.plyer_notification = None
                 self.notification_available = False
                 self.logger.warning("Plyer not available - popup notifications disabled")
             

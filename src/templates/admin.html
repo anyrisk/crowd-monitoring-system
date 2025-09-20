@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temple Counter - Admin Panel</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { background: #e74c3c; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .control-panel { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
+        .btn-danger { background-color: #e74c3c; color: white; }
+        .btn-primary { background-color: #3498db; color: white; }
+        .btn-success { background-color: #27ae60; color: white; }
+        input[type="number"], input[type="text"] { padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 100px; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 4px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Admin Control Panel</h1>
+            <p>Administrative functions for the Temple People Counter</p>
+        </div>
+        
+        <div class="control-panel">
+            <h3>Count Management</h3>
+            <button class="btn btn-danger" onclick="resetCounts()">Reset All Counts</button>
+            <div id="reset-result"></div>
+        </div>
+        
+        <div class="control-panel">
+            <h3>Crowd Limit Settings</h3>
+            <input type="number" id="new-crowd-limit" placeholder="New limit" min="1">
+            <button class="btn btn-primary" onclick="updateCrowdLimit()">Update Crowd Limit</button>
+            <div id="limit-result"></div>
+        </div>
+        
+        <div class="control-panel">
+            <h3>Alert Settings</h3>
+            <label><input type="checkbox" id="alerts-enabled"> Enable Alerts</label><br>
+            <label><input type="checkbox" id="sound-alerts"> Sound Alerts</label><br>
+            <label><input type="checkbox" id="popup-alerts"> Popup Alerts</label><br>
+            <input type="number" id="alert-cooldown" placeholder="Cooldown (sec)" min="5">
+            <button class="btn btn-primary" onclick="updateAlertSettings()">Update Alert Settings</button>
+            <div id="alerts-result"></div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="/" class="btn btn-success">Back to Dashboard</a>
+        </div>
+    </div>
+    
+    <script>
+        function resetCounts() {
+            const reason = prompt('Enter reason for reset:') || 'Admin panel reset';
+            
+            fetch('/api/admin/reset-counts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ reason: reason, admin_user: 'web_admin' })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const result = document.getElementById('reset-result');
+                result.className = 'result ' + (data.success ? 'success' : 'error');
+                result.textContent = data.data ? data.data.message : data.error;
+            })
+            .catch(error => {
+                const result = document.getElementById('reset-result');
+                result.className = 'result error';
+                result.textContent = 'Error: ' + error.message;
+            });
+        }
+        
+        function updateCrowdLimit() {
+            const newLimit = parseInt(document.getElementById('new-crowd-limit').value);
+            
+            if (!newLimit || newLimit <= 0) {
+                alert('Please enter a valid crowd limit');
+                return;
+            }
+            
+            fetch('/api/admin/update-crowd-limit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ new_limit: newLimit, admin_user: 'web_admin' })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const result = document.getElementById('limit-result');
+                result.className = 'result ' + (data.success ? 'success' : 'error');
+                result.textContent = data.data ? data.data.message : data.error;
+            })
+            .catch(error => {
+                const result = document.getElementById('limit-result');
+                result.className = 'result error';
+                result.textContent = 'Error: ' + error.message;
+            });
+        }
+        
+        function updateAlertSettings() {
+            const settings = {
+                alerts_enabled: document.getElementById('alerts-enabled').checked,
+                sound_alerts: document.getElementById('sound-alerts').checked,
+                popup_alerts: document.getElementById('popup-alerts').checked,
+                alert_cooldown: parseInt(document.getElementById('alert-cooldown').value) || null,
+                admin_user: 'web_admin'
+            };
+            
+            fetch('/api/admin/update-alert-settings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(settings)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const result = document.getElementById('alerts-result');
+                result.className = 'result ' + (data.success ? 'success' : 'error');
+                result.textContent = data.data ? data.data.message : data.error;
+            })
+            .catch(error => {
+                const result = document.getElementById('alerts-result');
+                result.className = 'result error';
+                result.textContent = 'Error: ' + error.message;
+            });
+        }
+    </script>
+</body>
+</html>
+        

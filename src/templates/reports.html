@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temple Counter - Reports</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { background: #27ae60; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .report-panel { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin: 5px; }
+        .btn-success { background-color: #27ae60; color: white; }
+        .btn-primary { background-color: #3498db; color: white; }
+        select, input[type="date"] { padding: 8px; border: 1px solid #ddd; border-radius: 4px; margin: 5px; }
+        .result { margin: 10px 0; padding: 10px; border-radius: 4px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Reports & Analytics</h1>
+            <p>Generate and download visitor reports</p>
+        </div>
+        
+        <div class="report-panel">
+            <h3>Generate Report</h3>
+            <select id="report-type">
+                <option value="daily">Daily Report</option>
+                <option value="weekly">Weekly Report</option>
+                <option value="monthly">Monthly Report</option>
+            </select>
+            <input type="date" id="report-date" value="">
+            <select id="report-format">
+                <option value="csv">CSV Format</option>
+                <option value="excel">Excel Format</option>
+            </select>
+            <button class="btn btn-success" onclick="generateReport()">Generate Report</button>
+            <div id="report-result"></div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="/" class="btn btn-primary">Back to Dashboard</a>
+        </div>
+    </div>
+    
+    <script>
+        // Set default date to today
+        document.getElementById('report-date').value = new Date().toISOString().split('T')[0];
+        
+        function generateReport() {
+            const reportType = document.getElementById('report-type').value;
+            const reportDate = document.getElementById('report-date').value;
+            const reportFormat = document.getElementById('report-format').value;
+            
+            const resultDiv = document.getElementById('report-result');
+            resultDiv.innerHTML = 'Generating report...';
+            resultDiv.className = 'result';
+            
+            fetch('/api/reports/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    report_type: reportType,
+                    target_date: reportDate,
+                    format: reportFormat,
+                    admin_user: 'web_admin'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `
+                        Report generated successfully!<br>
+                        <a href="${data.data.download_url}" class="btn btn-primary" download>
+                            Download ${data.data.filename}
+                        </a>
+                    `;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = data.error;
+                }
+            })
+            .catch(error => {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = 'Error: ' + error.message;
+            });
+        }
+    </script>
+</body>
+</html>
+        
