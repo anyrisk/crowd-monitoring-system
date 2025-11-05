@@ -1,5 +1,5 @@
 """
-Line-crossing counter module for the Smart Temple People Counter.
+Line-crossing counter module for the Smart Crowd Monitoring System.
 Implements virtual line crossing detection to count entries and exits.
 """
 
@@ -234,17 +234,17 @@ class PeopleCounter:
         # If positions are on different sides, a crossing occurred
         if prev_side != curr_side and prev_side != 0 and curr_side != 0:
             # Determine direction based on configuration and line orientation
-            if self.config.ENTRY_DIRECTION == "up_to_down":
-                # Entry is from negative to positive side (or left to right)
-                if prev_side < 0 and curr_side > 0:
-                    return CrossingDirection.ENTRY
-                elif prev_side > 0 and curr_side < 0:
-                    return CrossingDirection.EXIT
-            else:  # "down_to_up"
-                # Entry is from positive to negative side (or right to left)
+            if self.config.ENTRY_DIRECTION == "right_to_left":
+                # Entry is from positive to negative side (right to left)
                 if prev_side > 0 and curr_side < 0:
                     return CrossingDirection.ENTRY
                 elif prev_side < 0 and curr_side > 0:
+                    return CrossingDirection.EXIT
+            else:  # "left_to_right"
+                # Entry is from negative to positive side (left to right)
+                if prev_side < 0 and curr_side > 0:
+                    return CrossingDirection.ENTRY
+                elif prev_side > 0 and curr_side < 0:
                     return CrossingDirection.EXIT
         
         return CrossingDirection.NONE

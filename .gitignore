@@ -1,3 +1,5 @@
+# Crowd Monitoring System - Git Ignore
+
 # Python
 __pycache__/
 *.py[cod]
@@ -16,45 +18,19 @@ parts/
 sdist/
 var/
 wheels/
-pip-wheel-metadata/
-share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
 MANIFEST
 
-# PyInstaller
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-
-# Virtual environments
-.env
-.venv
-env/
+# Virtual Environment
 venv/
+env/
 ENV/
-env.bak/
-venv.bak/
+.venv/
+.env/
 
-# IDEs
+# IDE
 .vscode/
 .idea/
 *.swp
@@ -70,31 +46,66 @@ venv.bak/
 ehthumbs.db
 Thumbs.db
 
-# Project specific
-data/*.db
-data/database.db
-logs/*.log
+# Project Specific
+# AI Models (too large for git)
 models/*.pt
 models/*.onnx
-reports/*.csv
-reports/*.xlsx
-reports/*.pdf
+models/*.weights
 
-# Temporary files
+# Data Files
+data/database.db
+data/reports/*.csv
+data/reports/*.xlsx
+data/reports/*.pdf
+
+# Logs
+logs/*.log
+logs/*.txt
+
+# Screenshots
+screenshot_*.jpg
+screenshot_*.png
+
+# Temporary Files
 *.tmp
 *.temp
 temp/
 tmp/
 
-# Camera captures
-screenshots/
-captures/
+# Configuration (contains sensitive info)
+.env.local
+.env.production
+config.local.py
+
+# Cache
+.cache/
+*.cache
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
 
 # Backup files
-*.backup
 *.bak
+*.backup
+*~
 
-# Configuration files with sensitive data
-config_local.py
-.env.local
-secrets.json
+# Large video files
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Keep structure but ignore content
+data/reports/.gitkeep
+logs/.gitkeep
+models/.gitkeep

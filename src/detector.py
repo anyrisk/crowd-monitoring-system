@@ -1,5 +1,5 @@
 """
-Human detection module using YOLOv5 for the Smart Temple People Counter.
+Human detection module using YOLOv5 for the Smart Crowd Monitoring System.
 Handles loading the YOLO model and detecting people in video frames.
 """
 

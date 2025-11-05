@@ -1,5 +1,5 @@
 """
-Web dashboard for the Smart Temple People Counter.
+Web dashboard for the Smart Crowd Monitoring System.
 Provides live monitoring and historical data visualization using Flask.
 """
 
@@ -51,7 +51,7 @@ class DashboardServer:
         
         # Create Flask app
         self.app = Flask(__name__)
-        self.app.secret_key = 'temple_counter_secret_key_2024'  # Change in production
+        self.app.secret_key = 'crowd_monitor_secret_key_2024'  # Change in production
         
         # Live data cache
         self.live_data_cache = {
@@ -352,7 +352,7 @@ class DashboardServer:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Temple People Counter Dashboard</title>
+    <title>Crowd Monitoring Dashboard</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5; }
         .container { max-width: 1200px; margin: 0 auto; }
@@ -374,7 +374,7 @@ class DashboardServer:
 <body>
     <div class="container">
         <div class="header">
-            <h1>Temple People Counter Dashboard</h1>
+            <h1>Crowd Monitoring Dashboard</h1>
             <p>Real-time monitoring and analytics</p>
             <div id="updateTime">Last updated: Loading...</div>
         </div>
@@ -508,7 +508,7 @@ class DashboardServer:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Temple Counter - Admin Panel</title>
+    <title>Crowd Monitor - Admin Panel</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5; }
         .container { max-width: 800px; margin: 0 auto; }
@@ -528,7 +528,7 @@ class DashboardServer:
     <div class="container">
         <div class="header">
             <h1>Admin Control Panel</h1>
-            <p>Administrative functions for the Temple People Counter</p>
+            <p>Administrative functions for the Crowd Monitoring System</p>
         </div>
         
         <div class="control-panel">
@@ -649,7 +649,7 @@ class DashboardServer:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Temple Counter - Reports</title>
+    <title>Crowd Monitor - Reports</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5; }
         .container { max-width: 800px; margin: 0 auto; }
@@ -668,7 +668,7 @@ class DashboardServer:
     <div class="container">
         <div class="header">
             <h1>Reports & Analytics</h1>
-            <p>Generate and download visitor reports</p>
+            <p>Generate and download crowd reports</p>
         </div>
         
         <div class="report-panel">
@@ -841,7 +841,7 @@ def main():
     """Run dashboard server as standalone application."""
     import argparse
     
-    parser = argparse.ArgumentParser(description='Temple Counter Web Dashboard')
+    parser = argparse.ArgumentParser(description='Crowd Monitor Web Dashboard')
     parser.add_argument('--host', default='localhost', help='Host address')
     parser.add_argument('--port', type=int, default=5000, help='Port number')
     parser.add_argument('--debug', action='store_true', help='Enable debug mode')

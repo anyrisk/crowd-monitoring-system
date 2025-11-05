@@ -1,5 +1,5 @@
 """
-Drawing utilities for the Smart Temple People Counter.
+Drawing utilities for the Smart Crowd Monitoring System.
 Helper functions for drawing bounding boxes, lines, text, and other visual elements.
 """
 

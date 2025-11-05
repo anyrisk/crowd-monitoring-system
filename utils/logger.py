@@ -1,5 +1,5 @@
 """
-Logging utilities for the Smart Temple People Counter.
+Logging utilities for the Smart Crowd Monitoring System.
 Provides consistent logging across all modules with different log levels and outputs.
 """
 
@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Optional
 
 def setup_logger(
-    name: str = "temple_counter",
+    name: str = "crowd_monitor",
     log_file: Optional[str] = None,
     log_level: str = "INFO",
     console_output: bool = True
@@ -123,8 +123,8 @@ def log_database_operation(logger: logging.Logger, operation: str, success: bool
 
 # Create default logger instance
 default_logger = setup_logger(
-    name="temple_counter",
-    log_file="logs/temple_counter.log",
+    name="crowd_monitor",
+    log_file="logs/crowd_monitor.log",
     log_level="INFO",
     console_output=True
 )

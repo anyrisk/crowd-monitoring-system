@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Temple People Counter - Main startup script.
+Crowd Monitoring System - Main startup script.
 Provides options to run the system in different modes.
 """
 
@@ -15,7 +15,7 @@ project_root = Path(__file__).parent
 sys.path.append(str(project_root))
 
 try:
-    from src.main import create_temple_counter
+    from src.main import create_crowd_monitor
     from src.dashboard import create_dashboard_server
     from utils.config import get_config
     from utils.logger import default_logger
@@ -27,12 +27,12 @@ except ImportError as e:
 
 def run_counter_only():
     """Run only the people counter without web dashboard."""
-    print("Starting Temple People Counter (Counter Only Mode)")
+    print("Starting Crowd Monitoring System (Counter Only Mode)")
     print("Press 'q' to quit, 'r' to reset counts, 's' to save screenshot")
     print("-" * 60)
     
     try:
-        counter = create_temple_counter()
+        counter = create_crowd_monitor()
         counter.run()
     except KeyboardInterrupt:
         print("\nCounter stopped by user")
@@ -42,7 +42,7 @@ def run_counter_only():
 
 def run_with_dashboard():
     """Run people counter with web dashboard."""
-    print("Starting Temple People Counter (Full System Mode)")
+    print("Starting Crowd Monitoring System (Full System Mode)")
     print("Web dashboard will be available at http://localhost:5000")
     print("Press Ctrl+C to stop both services")
     print("-" * 60)
@@ -58,7 +58,7 @@ def run_with_dashboard():
         time.sleep(2)  # Give dashboard time to start
         
         # Start people counter in main thread
-        counter = create_temple_counter()
+        counter = create_crowd_monitor()
         
         print("Starting video processing...")
         counter.run()
@@ -73,7 +73,7 @@ def run_with_dashboard():
 
 def run_dashboard_only():
     """Run only the web dashboard for monitoring."""
-    print("Starting Temple People Counter (Dashboard Only Mode)")
+    print("Starting Crowd Monitoring System (Dashboard Only Mode)")
     print("Web dashboard will be available at http://localhost:5000")
     print("Press Ctrl+C to stop")
     print("-" * 60)
@@ -89,7 +89,7 @@ def run_dashboard_only():
 
 def check_system():
     """Check system configuration and dependencies."""
-    print("Temple People Counter - System Check")
+    print("Crowd Monitoring System - System Check")
     print("=" * 50)
     
     # Check Python version
@@ -166,7 +166,7 @@ def check_system():
 def main():
     """Main entry point with command-line argument parsing."""
     parser = argparse.ArgumentParser(
-        description='Temple People Counter System',
+        description='Crowd Monitoring System',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Operating Modes:

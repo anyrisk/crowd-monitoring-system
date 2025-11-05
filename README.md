@@ -5,7 +5,7 @@
 ![YOLOv5](https://img.shields.io/badge/YOLOv5-Latest-orange)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-🏛️ **A comprehensive real-time people counting system for temples and religious spaces using AI-powered computer vision.**
+👥 **A comprehensive real-time people counting system for crowd monitoring using AI-powered computer vision.**
 
 This system provides accurate entry/exit counting, crowd management, analytics, and web dashboard monitoring using Python, OpenCV, and YOLO object detection.
 
@@ -14,7 +14,7 @@ This system provides accurate entry/exit counting, crowd management, analytics, 
 - Entry/Exit counting with virtual line detection
 - Live headcount display with video overlay
 - SQLite database logging with timestamps
-- Daily/weekly/monthly visitor reports
+- Daily/weekly/monthly crowd reports
 - Crowd limit alerts and safety notifications
 - Optional web dashboard for monitoring
 
@@ -38,7 +38,7 @@ This system provides accurate entry/exit counting, crowd management, analytics, 
 ## 📁 Project Structure
 
 ```
-temple_project/
+crowd_monitoring_project/
 ├── src/                 # Main application code
 │   ├── main.py         # Entry point
 │   ├── detector.py     # YOLO human detection
@@ -75,7 +75,7 @@ Edit `utils/config.py` to customize:
 1. **Live Monitoring**: The main application shows real-time video with people detection
 2. **Count Tracking**: Virtual line detects entries/exits automatically
 3. **Data Logging**: All events are stored in SQLite database
-4. **Reports**: Generate visitor summaries and export to CSV/Excel
+4. **Reports**: Generate crowd summaries and export to CSV/Excel
 5. **Alerts**: Get notified when crowd limits are exceeded
 
 ## 🛠️ Tech Stack
@@ -95,7 +95,7 @@ Generate reports with:
 from src.reports import ReportGenerator
 generator = ReportGenerator()
 generator.generate_daily_report(date="2024-01-15")
-generator.export_to_csv("daily_visitors.csv")
+generator.export_to_csv("daily_crowd.csv")
 ```
 
 ## 🚨 Safety Features
@@ -133,8 +133,22 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Contact
 
-Project Link: [https://github.com/anyrisk/crowd-monitoring-system](https://github.com/anyrisk/crowd-monitoring-system)
+## 🚀 **Ready for Production Use!**
+
+This system is fully functional and tested. Features working:
+- ✅ Real-time people detection and counting
+- ✅ Entry/Exit tracking (Right→Left = Entry, Left→Right = Exit)  
+- ✅ Live video overlay with statistics
+- ✅ SQLite database logging with timestamps
+- ✅ Web dashboard for remote monitoring
+- ✅ Automated report generation
+- ✅ Crowd limit alerts and notifications
+- ✅ Laptop camera and DroidCam support
+
+## 📞 Contact & Repository
+
+Project Link: [https://github.com/yourusername/crowd-monitoring-system](https://github.com/yourusername/crowd-monitoring-system)
 
 ---
 
-**Crowd Monitoring System** - Smart visitor management with AI-powered analytics.
+**Crowd Monitoring System** - Smart crowd management with AI-powered analytics.

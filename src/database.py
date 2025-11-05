@@ -1,5 +1,5 @@
 """
-Database operations for the Smart Temple People Counter.
+Database operations for the Smart Crowd Monitoring System.
 Handles SQLite database setup, table creation, and CRUD operations for logging entry/exit events.
 """
 
@@ -355,7 +355,7 @@ class DatabaseManager:
     
     def get_hourly_distribution(self, target_date: date = None) -> List[Dict]:
         """
-        Get hourly distribution of visitors for a specific date.
+        Get hourly distribution of people for a specific date.
         
         Args:
             target_date (date): Date to analyze (default: today)

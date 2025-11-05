@@ -1,5 +1,5 @@
 """
-Object tracking module for the Smart Temple People Counter.
+Object tracking module for the Smart Crowd Monitoring System.
 Assigns and maintains unique IDs for detected people across video frames using centroid tracking.
 """
 

@@ -1,6 +1,6 @@
 """
-Reports generation module for the Smart Temple People Counter.
-Generates daily/weekly/monthly visitor summaries and exports to CSV/Excel formats.
+Reports generation module for the Smart Crowd Monitoring System.
+Generates daily/weekly/monthly crowd summaries and exports to CSV/Excel formats.
 """
 
 import pandas as pd
@@ -44,7 +44,7 @@ class ReportGenerator:
     
     def generate_daily_report(self, target_date: date = None) -> Dict[str, Any]:
         """
-        Generate comprehensive daily visitor report.
+        Generate comprehensive daily crowd report.
         
         Args:
             target_date (date): Date to generate report for (default: today)
@@ -87,7 +87,7 @@ class ReportGenerator:
     
     def generate_weekly_report(self, start_date: date = None) -> Dict[str, Any]:
         """
-        Generate weekly visitor report.
+        Generate weekly crowd report.
         
         Args:
             start_date (date): Start date of the week (default: this week's Monday)
@@ -107,7 +107,7 @@ class ReportGenerator:
             
             # Collect daily data for the week
             weekly_data = []
-            total_visitors = 0
+            total_people = 0
             peak_day = None
             peak_count = 0
             
@@ -115,17 +115,17 @@ class ReportGenerator:
                 current_date = start_date + timedelta(days=i)
                 daily_stats = self.db_manager.get_daily_stats(current_date)
                 
-                day_visitors = daily_stats.get('total_entries', 0)
-                total_visitors += day_visitors
+                day_people = daily_stats.get('total_entries', 0)
+                total_people += day_people
                 
-                if day_visitors > peak_count:
-                    peak_count = day_visitors
+                if day_people > peak_count:
+                    peak_count = day_people
                     peak_day = current_date
                 
                 weekly_data.append({
                     'date': current_date,
                     'day_name': current_date.strftime('%A'),
-                    'total_entries': day_visitors,
+                    'total_entries': day_people,
                     'total_exits': daily_stats.get('total_exits', 0),
                     'peak_count': daily_stats.get('peak_count', 0)
                 })
@@ -134,8 +134,8 @@ class ReportGenerator:
             report_data = {
                 'week_start': start_date,
                 'week_end': end_date,
-                'total_visitors': total_visitors,
-                'average_daily_visitors': total_visitors / 7,
+                'total_people': total_people,
+                'average_daily_people': total_people / 7,
                 'peak_day': peak_day,
                 'peak_day_count': peak_count,
                 'daily_breakdown': weekly_data,
@@ -150,7 +150,7 @@ class ReportGenerator:
     
     def generate_monthly_report(self, year: int = None, month: int = None) -> Dict[str, Any]:
         """
-        Generate monthly visitor report.
+        Generate monthly crowd report.
         
         Args:
             year (int): Year for report (default: current year)
@@ -176,23 +176,23 @@ class ReportGenerator:
             
             # Collect data for the month
             monthly_stats = []
-            total_visitors = 0
+            total_people = 0
             peak_day = None
             peak_count = 0
             
             current_date = start_date
             while current_date <= end_date:
                 daily_stats = self.db_manager.get_daily_stats(current_date)
-                day_visitors = daily_stats.get('total_entries', 0)
-                total_visitors += day_visitors
+                day_people = daily_stats.get('total_entries', 0)
+                total_people += day_people
                 
-                if day_visitors > peak_count:
-                    peak_count = day_visitors
+                if day_people > peak_count:
+                    peak_count = day_people
                     peak_day = current_date
                 
                 monthly_stats.append({
                     'date': current_date,
-                    'total_entries': day_visitors,
+                    'total_entries': day_people,
                     'total_exits': daily_stats.get('total_exits', 0),
                     'peak_count': daily_stats.get('peak_count', 0)
                 })
@@ -208,8 +208,8 @@ class ReportGenerator:
                 'month_name': start_date.strftime('%B'),
                 'start_date': start_date,
                 'end_date': end_date,
-                'total_visitors': total_visitors,
-                'average_daily_visitors': total_visitors / days_in_month,
+                'total_people': total_people,
+                'average_daily_people': total_people / days_in_month,
                 'peak_day': peak_day,
                 'peak_day_count': peak_count,
                 'days_in_month': days_in_month,
@@ -237,7 +237,7 @@ class ReportGenerator:
         try:
             if filename is None:
                 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                filename = f"temple_report_{timestamp}.csv"
+                filename = f"crowd_report_{timestamp}.csv"
             
             filepath = self.reports_dir / filename
             
@@ -274,7 +274,7 @@ class ReportGenerator:
         try:
             if filename is None:
                 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                filename = f"temple_report_{timestamp}.xlsx"
+                filename = f"crowd_report_{timestamp}.xlsx"
             
             filepath = self.reports_dir / filename
             
@@ -313,7 +313,7 @@ class ReportGenerator:
             List of paths to generated chart files
         """
         if chart_types is None:
-            chart_types = ['daily_visitors', 'hourly_distribution', 'weekly_trends']
+            chart_types = ['daily_people', 'hourly_distribution', 'weekly_trends']
         
         chart_files = []
         
@@ -335,15 +335,15 @@ class ReportGenerator:
         try:
             plt.figure(figsize=(12, 8))
             
-            if chart_type == 'daily_visitors' and 'daily_breakdown' in report_data:
-                # Daily visitors chart
+            if chart_type == 'daily_people' and 'daily_breakdown' in report_data:
+                # Daily people chart
                 daily_data = report_data['daily_breakdown']
                 df = pd.DataFrame(daily_data)
                 
                 plt.plot(df['date'], df['total_entries'], marker='o', linewidth=2)
-                plt.title('Daily Visitor Count', fontsize=16)
+                plt.title('Daily People Count', fontsize=16)
                 plt.xlabel('Date')
-                plt.ylabel('Number of Visitors')
+                plt.ylabel('Number of People')
                 plt.xticks(rotation=45)
                 plt.grid(True, alpha=0.3)
             
@@ -353,7 +353,7 @@ class ReportGenerator:
                 df = pd.DataFrame(hourly_data)
                 
                 plt.bar(df['hour'], df['entries'], alpha=0.7, color='skyblue')
-                plt.title('Hourly Visitor Distribution', fontsize=16)
+                plt.title('Hourly People Distribution', fontsize=16)
                 plt.xlabel('Hour of Day')
                 plt.ylabel('Number of Entries')
                 plt.grid(True, alpha=0.3)
@@ -365,9 +365,9 @@ class ReportGenerator:
                 
                 if 'day_name' in df.columns:
                     plt.bar(df['day_name'], df['total_entries'], alpha=0.7, color='lightgreen')
-                    plt.title('Weekly Visitor Trends', fontsize=16)
+                    plt.title('Weekly People Trends', fontsize=16)
                     plt.xlabel('Day of Week')
-                    plt.ylabel('Number of Visitors')
+                    plt.ylabel('Number of People')
                     plt.xticks(rotation=45)
                 
             else:
@@ -390,7 +390,7 @@ class ReportGenerator:
             return None
     
     def _find_peak_hour(self, hourly_data: List[Dict]) -> Optional[int]:
-        """Find the hour with highest visitor count."""
+        """Find the hour with highest people count."""
         if not hourly_data:
             return None
         
@@ -506,10 +506,10 @@ class ReportGenerator:
         # Calculate weekly totals
         weekly_totals = []
         for week_key, week_data in weeks.items():
-            total_visitors = sum(day['total_entries'] for day in week_data)
+            total_people = sum(day['total_entries'] for day in week_data)
             weekly_totals.append({
                 'week': week_key,
-                'total_visitors': total_visitors,
+                'total_people': total_people,
                 'days_count': len(week_data)
             })
         
@@ -519,7 +519,7 @@ class ReportGenerator:
         }
     
     def _compare_weekend_weekday(self, df: pd.DataFrame) -> Dict[str, float]:
-        """Compare weekend vs weekday visitor patterns."""
+        """Compare weekend vs weekday people patterns."""
         weekend_days = ['Saturday', 'Sunday']
         
         weekend_data = df[df['day_name'].isin(weekend_days)]

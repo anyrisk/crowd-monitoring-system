@@ -86,7 +86,7 @@ def test_system_requirements():
 def main():
     """Main test function."""
     print("=" * 50)
-    print("Temple Counter Detector Test")
+    print("Crowd Monitor Detector Test")
     print("=" * 50)
     
     # Test requirements

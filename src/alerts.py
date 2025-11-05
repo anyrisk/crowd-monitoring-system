@@ -1,5 +1,5 @@
 """
-Alert system for the Smart Temple People Counter.
+Alert system for the Smart Crowd Monitoring System.
 Handles crowd limit notifications, safety alerts, and various notification methods.
 """
 
@@ -247,7 +247,7 @@ class AlertManager:
             try:
                 if self.notification_available:
                     # Use plyer for cross-platform notifications
-                    title = f"Temple Counter - {alert.alert_type.value.title()}"
+                    title = f"Crowd Monitor - {alert.alert_type.value.title()}"
                     
                     self.plyer_notification.notify(
                         title=title,

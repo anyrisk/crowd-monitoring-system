@@ -1,5 +1,5 @@
 """
-Video overlay module for the Smart Temple People Counter.
+Video overlay module for the Smart Crowd Monitoring System.
 Handles drawing all visual elements on video frames including bounding boxes, 
 tracking IDs, counting line, statistics, and alerts.
 """

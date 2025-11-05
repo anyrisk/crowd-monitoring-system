@@ -1,5 +1,5 @@
 """
-Configuration management for the Smart Temple People Counter.
+Configuration management for the Smart Crowd Monitoring System.
 Handles all application settings including camera, detection, counting, and alert parameters.
 """
 
@@ -63,9 +63,9 @@ class Config:
             "color": (0, 255, 0)  # Green line
         }
         
-        # Direction settings
-        self.ENTRY_DIRECTION = "up_to_down"  # "up_to_down" or "down_to_up"
-        self.EXIT_DIRECTION = "down_to_up"   # Opposite of entry
+        # Direction settings (Right to Left = Entry, Left to Right = Exit)
+        self.ENTRY_DIRECTION = "right_to_left"  # "right_to_left" or "left_to_right"
+        self.EXIT_DIRECTION = "left_to_right"   # Opposite of entry
         
         # Crowd management
         self.CROWD_LIMIT = int(os.getenv("CROWD_LIMIT", 100))
@@ -85,7 +85,7 @@ class Config:
         # Display settings
         self.SHOW_BOUNDING_BOXES = True
         self.SHOW_TRACKING_IDS = True
-        self.SHOW_COUNTING_LINE = True
+        self.SHOW_COUNTING_LINE = False  # Hide counting line
         self.SHOW_STATISTICS = True
         
         # Colors (BGR format for OpenCV)
@@ -110,7 +110,7 @@ class Config:
         
         # Logging settings
         self.LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
-        self.LOG_FILE = "logs/temple_counter.log"
+        self.LOG_FILE = "logs/crowd_monitor.log"
         
         # Report settings
         self.AUTO_GENERATE_REPORTS = True

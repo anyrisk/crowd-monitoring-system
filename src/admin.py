@@ -1,5 +1,5 @@
 """
-Administrative controls for the Smart Temple People Counter.
+Administrative controls for the Smart Crowd Monitoring System.
 Provides count reset, configuration management, and system administration features.
 """
 
